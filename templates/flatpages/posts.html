@@ -15,6 +15,11 @@ Posts
    </form>
 
    <hr>
+
+    {% if perms.basis.add_news %}
+    <a href="{% url 'post_create' %}">Добавить пост</a>
+    {% endif %}
+
    {% if posts %}
        <table>
            <tr>
@@ -22,6 +27,10 @@ Posts
                <td>Дата публикации</td>
                <td>Новость</td>
            </tr>
+
+                {% if perms.basis.change_post or perms.basis.delete_post %}
+                <td>Действия</td>
+                {% endif %}
 
            {% for post in posts %}
            <tr>
@@ -31,6 +40,14 @@ Posts
            </tr>
            {% endfor %}
 
+           {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
+                    {% if perms.basis.change_post %}
+                    <a href="{% url 'post_update' pk=post.id %}">Изменить</a>
+                    {% endif %}
+                    {% if perms.basis.delete_post %}
+                    <a href="{% url 'post_delete' post.id %}">Удалить</a>
+                    {% endif %}
+                </td>
        </table>
    {% else %}
        <h2>Новостей нет!</h2>

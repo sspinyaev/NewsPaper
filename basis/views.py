@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -56,8 +56,8 @@ class PostSearch(ListView):
         return context
 
 
-class NewsCreate(CreateView, LoginRequiredMixin):
-    raise_exception = True
+class NewsCreate(CreateView, PermissionRequiredMixin):
+    permission_required = ('basis.add_news',)
     form_class = PostForm
     model = Post
     template_name = 'news_edit.html'
@@ -68,7 +68,8 @@ class NewsCreate(CreateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 
-class NewsEdit(UpdateView):
+class NewsEdit(UpdateView, PermissionRequiredMixin):
+    permission_required = ('basis.update_news',)
     form_class = PostForm
     model = Post
     template_name = 'news_edit.html'
@@ -79,8 +80,8 @@ class NewsEdit(UpdateView):
         return super().form_valid(form)
 
 
-
-class NewsDelete(DeleteView):
+class NewsDelete(DeleteView, PermissionRequiredMixin):
+    permission_required = ('basis.delete_news',)
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('/news/')
@@ -91,7 +92,8 @@ class NewsDelete(DeleteView):
         return super().form_valid(form)
 
 
-class ArticleCreate(CreateView):
+class ArticleCreate(CreateView, PermissionRequiredMixin):
+    permission_required = ('basis.add_article',)
     form_class = PostForm
     model = Post
     template_name = 'aricle_create.html'
@@ -102,7 +104,8 @@ class ArticleCreate(CreateView):
         return super().form_valid(form)
 
 
-class ArticleEdit(UpdateView):
+class ArticleEdit(UpdateView, PermissionRequiredMixin):
+    permission_required = ('basis.update_article',)
     form_class = PostForm
     model = Post
     template_name = 'article_edit.html'
@@ -113,7 +116,8 @@ class ArticleEdit(UpdateView):
         return super().form_valid(form)
 
 
-class ArticleDelete(DeleteView):
+class ArticleDelete(DeleteView, PermissionRequiredMixin):
+    permission_required = ('basis.delete_article',)
     model = Post
     template_name = 'article_delete.html'
     success_url = reverse_lazy('/news/')

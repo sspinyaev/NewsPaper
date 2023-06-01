@@ -71,7 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processor.request',
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -149,3 +149,5 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
