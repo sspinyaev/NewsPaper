@@ -1,5 +1,5 @@
 from django import template
-import replace
+
 
 register = template.Library()
 

@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from django import template
 
 
@@ -10,7 +9,7 @@ register = template.Library()
 def current_time(format_string='%b %d %Y'):
    return datetime.utcnow().strftime(format_string)
 
-@register.fix_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def url_replace(context, **kwargs):
    d = context['request'].GET.copy()
    for k, v in kwargs.items():
